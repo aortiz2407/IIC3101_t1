@@ -7,4 +7,4 @@ Esta aplicación está construida sobre Django.
 
 ### Página
 La página está desplegada en el siguiente sitio: 
-[Aplicación Tarea 1](www.google.com)
+[Aplicación Tarea 1](http://alortiz.pythonanywhere.com)
