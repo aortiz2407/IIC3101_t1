@@ -1,0 +1,21 @@
+@font-face {
+    font-family: 'Nunito Sans', sans-serif;
+    src: url('BebasNeue-webfont.eot');
+    src: url('BebasNeue-webfont.eot?#iefix') format('embedded-opentype'),
+         url('BebasNeue-webfont.woff') format('woff'),
+         url('BebasNeue-webfont.ttf') format('truetype'),
+         url('BebasNeue-webfont.svg#BebasNeueRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'BebasNeue'; /*a name to be used later*/
+    src: url("fonts/bebas-neue/BebasNeue-webfont.ttf"); /*URL to font*/
+}
+
+@font-face {
+    font-family: 'Myriad Pro'; /*a name to be used later*/
+    src: url("fonts/myriad/Myriad Pro Regular.ttf"); /*URL to font*/
+}

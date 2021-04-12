@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+     <!-- <link rel="stylesheet" type="text/css" href="stylesheet.css">-->
+    <title> BBD App </title>
+    <style>
+        * {
+        margin: 0;
+        font-family:'Nunito Sans', sans-serif;
+        box-sizing: border-box;
+        }
+
+        #main {
+        text-align:center;
+        padding-top: 40px;
+        }
+
+        input[type='text']{
+            width: 30%;
+            padding: 10px;
+            border: 2px solid black;
+            margin-bottom: 5px ;
+            margin-top: 20px;
+        }
+
+        input[type='submit']{
+            width: 30%;
+            padding: 10px;
+            border: 2px;
+            background: black;
+            color: white;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+        td {
+            font-size: 15px;
+            line-height: 20px;
+            padding: 0 20px;
+            text-align: justify;
+            vertical-align: top;
+            width: 50%;
+            }
+        .box img{
+        width: 100%;
+        height: auto;
+        }
+        @supports(object-fit: cover){
+            .box img{
+              height: 100%;
+              object-fit: cover;
+              object-position: center center;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+    <img src="https://i.ibb.co/bKzdGWn/fondo.jpg">
+</div>
+
+<div id="main">
+    <h1> Welcome to The Walter White App </h1>
+    <form method="GET">
+        <label for="character_search"></label>
+        <!-- Revisar si funciona con character o characters-->
+        <input type="text" name="character_search" id="character_search" value= "{{request.GET.character}}" placeholder="Character...">
+        <input type="submit" value="Submit">
+    </form>
+    <br>
+    {% if character_description %}
+        <h3>Name: {{character_description.Name}}</h3>
+        <h3>Occupation: {{character_description.Occupation}}</h3>
+        <h3>Status: {{character_description.Status}}</h3>
+        <h3>Nicknames: {{character_description.Nicknames}}</h3>
+        <h3>Seasons: {{character_description.Seasons}}</h3>
+        <h3>Portrayed: {{character_description.Portrayed}}</h3>
+    {% endif %}
+</div>
+
+<div id="episodes">
+    <form method="GET">
+    <table style="margin: 0 auto;">
+
+        <tr>
+             <td class="first">
+                 <h2> Breaking Bad </h2>
+                {% for temporada in all_ep_bb.bb %}
+                    <h3>Temporada {{temporada.name}}</h3>
+                    <!-- <select name="episodio" onchange="this.form.submit()">-->
+                    <select name="episodio" onchange="this.form.submit()">
+                        <option value=None> Elige episodio </option>>
+                    {% for episode in temporada.episodes %}
+                        <option value={{episode.episode_id}}> {{episode.title}} </option>
+                    {% endfor %}
+                    </select>
+                {% endfor %}
+             </td>
+            <td class="second">
+                <h2> Better Call Soul </h2>
+                {% for temporada in all_ep_bb.bcs %}
+                    <h3>Temporada {{temporada.name}}</h3>
+                    <select name="episodio" onchange="this.form.submit()">
+                        <option value=None> Elige episodio </option>>
+                    {% for episode in temporada.episodes %}
+                        <option value={{episode.episode_id}}> {{episode.title}} </option>
+                    {% endfor %}
+
+
+                    </select>
+                {% endfor %}
+            </td>
+        </tr>
+    </table>
+    </form>
+
+<br><br>
+
+</div>
+
+
+</body>
+</html>

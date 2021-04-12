@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> Characters </title>
+    <style>
+        * {
+        margin: 0;
+        font-family:'Nunito Sans', sans-serif;
+        box-sizing: border-box;
+        }
+
+        #main {
+        text-align:center;
+        padding-top: 100px;
+        }
+
+        input[type='text']{
+            width: 30%;
+            padding: 10px;
+            border: 2px solid black;
+            margin-bottom: 5px ;
+            margin-top: 20px;
+        }
+
+        input[type='submit']{
+            width: 30%;
+            padding: 10px;
+            border: 2px;
+            background: black;
+            color: white;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+        .box img{
+        width: 100%;
+        height: auto;
+        }
+        @supports(object-fit: cover){
+            .box img{
+              height: 100%;
+              object-fit: cover;
+              object-position: center center;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+    <img src="https://i.ibb.co/bKzdGWn/fondo.jpg">
+</div>
+
+<div id="main">
+    <form method="GET">
+        <label for="character_search"></label>
+        <!-- Revisar si funciona con character o characters-->
+        <input type="text" name="character_search" id="character_search" value= "{{request.GET.character}}" placeholder="Character...">
+        <input type="submit" value="Submit">
+    </form>
+
+    <br>
+
+    <h1> {{episode_description.Name}} </h1>
+    <h3>Season: {{episode_description.Season}}</h3>
+    <h3>Air Date: {{episode_description.Air_Date}} </h3>
+    <h3>Characters: </h3>
+    {% for character in episode_description.characters %}
+        <h4> <a href="?character={{character}}"> {{character}} </a> </h4>
+    {% endfor %}
+    <br>
+</div>
+
+</body>
+</html>
