@@ -92,10 +92,10 @@
              <td class="first">
                  <h2> Breaking Bad </h2>
                 {% for temporada in all_ep_bb.bb %}
-                    <h3>Temporada {{temporada.name}}</h3>
+                    <h3>Season {{temporada.name}}</h3>
                     <!-- <select name="episodio" onchange="this.form.submit()">-->
                     <select name="episodio" onchange="this.form.submit()">
-                        <option value=None> Elige episodio </option>>
+                        <option value=None> Choose episode </option>>
                     {% for episode in temporada.episodes %}
                         <option value={{episode.episode_id}}> {{episode.title}} </option>
                     {% endfor %}
@@ -105,9 +105,9 @@
             <td class="second">
                 <h2> Better Call Soul </h2>
                 {% for temporada in all_ep_bb.bcs %}
-                    <h3>Temporada {{temporada.name}}</h3>
+                    <h3>Season {{temporada.name}}</h3>
                     <select name="episodio" onchange="this.form.submit()">
-                        <option value=None> Elige episodio </option>>
+                        <option value=None> Choose episode </option>>
                     {% for episode in temporada.episodes %}
                         <option value={{episode.episode_id}}> {{episode.title}} </option>
                     {% endfor %}
