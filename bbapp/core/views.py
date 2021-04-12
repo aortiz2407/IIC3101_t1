@@ -2,20 +2,28 @@ from django.http import HttpResponse
 import requests
 from django.shortcuts import render
 from datetime import datetime
+from requests.adapters import HTTPAdapter
+from requests.packages.urllib3.util.retry import Retry
+import time
 
 # Create your views here.
 def home(request):
     # buscar datos del personaje
+    session = requests.Session()
+    retry = Retry(connect=2, backoff_factor=1)
+    adapter = HTTPAdapter(max_retries=retry)
+    session.mount('http://', adapter)
+    session.mount('https://', adapter)
+
     if 'episodio' in request.GET:
         lista_episodios = request.GET.copy()
-        print("blabla ", lista_episodios)
         lista_episodios = lista_episodios.pop('episodio')
         id_episodio = None
         for elem in lista_episodios:
             if elem != "None":
                 id_episodio = elem
         url = "https://tarea-1-breaking-bad.herokuapp.com/api/episodes/{dato}".format(dato=id_episodio)
-        r = requests.get(url).json()[0]
+        r = session.get(url).json()[0]
 
         # Pasar date a date bonito
         date_time_str = r["air_date"].replace("T", " ").replace(".000Z", "")
@@ -35,7 +43,7 @@ def home(request):
         dato_ingresado = request.GET.get('character_search').replace(' ', '+')
         url = "https://tarea-1-breaking-bad.herokuapp.com/api/characters?name={dato}".format(dato=dato_ingresado)
         # me va a devolver una lista de respuestas
-        r = requests.get(url).json()
+        r = session.get(url).json()
         resultados = []
         print(r)
 
@@ -53,8 +61,9 @@ def home(request):
         dato_ingresado = request.GET.get('character').replace(' ', '+')
         url = "https://tarea-1-breaking-bad.herokuapp.com/api/characters?name={dato}".format(dato=dato_ingresado)
         url_frases = "https://tarea-1-breaking-bad.herokuapp.com/api/quote?author={dato}".format(dato=dato_ingresado)
-        r = requests.get(url).json()[0]
-        r_frase = requests.get(url_frases).json()
+        r =  session.get(url).json()[0]
+        # time.sleep(3)
+        r_frase = session.get(url_frases).json()
         frases = []
 
         for frase_dict in r_frase:
@@ -103,7 +112,7 @@ def home(request):
                 season_description["Serie"] = "Better Call Saul"
                 episodios= "https://tarea-1-breaking-bad.herokuapp.com/api/episodes?series=Better+Call+Saul"
 
-            r = requests.get(episodios).json()
+            r = session.get(episodios).json()
             temporadas = ["1", "2", "3", "4", "5"]
             all_ep = []
 
@@ -122,10 +131,11 @@ def home(request):
         episodios_bb = "https://tarea-1-breaking-bad.herokuapp.com/api/episodes?series=Breaking+Bad"
         episodios_bcs = "https://tarea-1-breaking-bad.herokuapp.com/api/episodes?series=Better+Call+Saul"
 
-        r = requests.get(episodios_bb).json()
-        r_2 = requests.get(episodios_bcs).json()
+        r = session.get(episodios_bb).json()
+        # time.sleep(5)
+        r_2 = session.get(episodios_bcs).json()
 
-        temporadas = ["1", "2", "3", "4", "5"]
+        temporadas = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
         all_ep_bb = []
         all_ep_bcs = []
         # all_ep_bb será un diccionario de tipo {"temporadas": n_temporadas, "contenido": lista_episodios}
@@ -140,7 +150,10 @@ def home(request):
                 if diccionario["season"] == temporada:
                     episodios_por_temporada.append(diccionario)
             contenido_temporada["episodes"] = episodios_por_temporada
-            all_ep_bb.append(contenido_temporada)
+            if episodios_por_temporada == []:
+                pass
+            else:
+                all_ep_bb.append(contenido_temporada)
 
         for temporada in temporadas:
             contenido_temporada = dict()
@@ -152,7 +165,10 @@ def home(request):
                 if diccionario["season"] == temporada:
                     episodios_por_temporada.append(diccionario)
             contenido_temporada["episodes"] = episodios_por_temporada
-            all_ep_bcs.append(contenido_temporada)
+            if episodios_por_temporada == []:
+                pass
+            else:
+                all_ep_bcs.append(contenido_temporada)
 
         all_shows = dict()
         all_shows["bb"] = all_ep_bb
@@ -160,7 +176,6 @@ def home(request):
 
         context = {"all_ep_bb": all_shows}
         return render(request, 'core/home.html', context)
-
 
 def character_view(request):
     print("llegué a character view con el siguiente request: ")
