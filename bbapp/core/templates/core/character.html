@@ -80,13 +80,13 @@
     {% if character_description.appearance%}
         <h3>Seasons Breaking Bad </h3>
         {% for seasons in character_description.appearance %}
-            <h4> <a href="?season={{seasons}}&serie=bb"> Temporada {{seasons}} </a> </h4>
+            <h4> <a href="?season={{seasons}}&serie=bb"> Season {{seasons}} </a> </h4>
         {% endfor %}
     {% endif %}
     {% if character_description.bcs_appearance%}
         <h3>Seasons Better Call Saul </h3>
         {% for seasons in character_description.bcs_appearance %}
-            <h4> <a href="?season={{seasons}}&serie=bcs}"> Temporada {{seasons}} </a> </h4>
+            <h4> <a href="?season={{seasons}}&serie=bcs}"> Season {{seasons}} </a> </h4>
         {% endfor %}
     {% endif %}
     <h3>Portrayed: {{character_description.Portrayed}}</h3>
