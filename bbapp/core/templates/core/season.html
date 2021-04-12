@@ -67,9 +67,9 @@
 
     <form method="GET">
         <h1> {{season_description.Serie}} </h1>
-            <h3>Temporada {{season_description.season}}</h3>
+            <h3> Season {{season_description.season}}</h3>
                 <select name="episodio" onchange="this.form.submit()">
-                    <option value=None> Elige episodio </option>
+                    <option value=None> Choose episode </option>
                     {% for episode in season_description.episodes %}
                         <option value={{episode.episode_id}}> {{episode.title}} </option>
                     {% endfor %}
